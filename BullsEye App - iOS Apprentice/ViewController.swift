@@ -22,7 +22,7 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        startNewRound()
+        startNewGame()
         updateLabels()
     }
 
@@ -31,16 +31,27 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    func updateLabels() {
+        targetLabel.text = String(targetValue)
+        scoreLabel.text = String(score)
+        roundLabel.text = String(round)
+    }
+    
     func startNewRound() {
         round += 1
         targetValue = 1 + Int(arc4random_uniform(100))
         currentValue = 50
         slider.value = Float(currentValue)
     }
+    
+    func startNewGame() {
+        score = 0
+        round = 0
+        startNewRound()
+    }
 
     // "Hit Me!" Button to display the alert popup and slider value
     @IBAction func showAlert() {
-        
         let difference = abs(targetValue - currentValue)
         var points = 100 - difference
         
@@ -75,7 +86,7 @@ class ViewController: UIViewController {
                                    style: .default,
                                    handler: { action in
                                    self.startNewRound()       // Popup alert callback pattern event handler for starting new round
-                                    self.updateLabels() } )   // and updating the labels
+                                   self.updateLabels() } )   // and updating the labels
         
         alert.addAction(action)
         
@@ -84,23 +95,22 @@ class ViewController: UIViewController {
                 completion: nil)
     }
     
-    func updateLabels() {
-        
-        targetLabel.text = String(targetValue)
-        scoreLabel.text = String(score)
-        roundLabel.text = String(round)
-    }
-    
     // Implement movement of the slider
     @IBAction func sliderMoved(_ slider: UISlider) {
         
         currentValue = lroundf(slider.value)
     }
     
+    // Start over button functionality
+    @IBAction func startOver() {
+        startNewGame()
+        updateLabels()
+    }
+    
 }
 
 
-// 1. Added callback pattern event handler to the popup alert for starting new round and updating labels
+// 1. Implement Start Over button
 
 
 

@@ -12,9 +12,13 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var slider: UISlider!
     @IBOutlet weak var targetLabel: UILabel!
+    @IBOutlet weak var scoreLabel: UILabel!
+    @IBOutlet weak var roundLabel: UILabel!
     
-    var currentValue: Int = 0
-    var targetValue: Int = 0
+    var currentValue = 0
+    var targetValue = 0
+    var score = 0
+    var round = 0
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,6 +32,7 @@ class ViewController: UIViewController {
     }
     
     func startNewRound() {
+        round += 1
         targetValue = 1 + Int(arc4random_uniform(100))
         currentValue = 50
         slider.value = Float(currentValue)
@@ -36,7 +41,15 @@ class ViewController: UIViewController {
     // "Hit Me!" Button to display the alert popup and slider value
     @IBAction func showAlert() {
         
-        let message = "The value of the slider is: \(currentValue)" + "\nThe target value is: \(targetValue)"
+        let difference = abs(targetValue - currentValue)
+        let points = 100 - difference
+        
+        score += points
+        
+        let message = "The value of the slider is: \(currentValue)"
+                    + "\nThe target value is: \(targetValue)"
+                    + "\nThe difference is: \(difference)"
+                    + "\nYou scored \(points) points!"
         
         let alert = UIAlertController(title: "Hello World",
                                       message: message,
@@ -59,6 +72,8 @@ class ViewController: UIViewController {
     func updateLabels() {
         
         targetLabel.text = String(targetValue)
+        scoreLabel.text = String(score)
+        roundLabel.text = String(round)
     }
     
     // Implement movement of the slider
@@ -70,10 +85,9 @@ class ViewController: UIViewController {
 }
 
 
-// 1. Add outlets
-// 2. Random numbers
-// 3. Add new rounds
-// 4. Add target value label
+// 1. Get the difference between current value and targetValue
+// 2. Add player's score
+// 3. Increment rounds on screen
 
 
 

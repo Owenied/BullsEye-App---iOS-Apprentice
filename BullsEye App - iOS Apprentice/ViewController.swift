@@ -42,16 +42,33 @@ class ViewController: UIViewController {
     @IBAction func showAlert() {
         
         let difference = abs(targetValue - currentValue)
-        let points = 100 - difference
+        var points = 100 - difference
+        
+        // Display text based on how the player performs
+        let title: String
+        if difference == 0 {
+            title = "Perfect!"
+            points += 100 // Gain 100 bonus points for a perfect score
+        } else if difference < 5 {
+            title = "You almost had it!"
+            if difference == 1 {
+                points += 50 // Gain 50 bonus points for being one off
+            }
+        } else if difference < 10 {
+            title = "Pretty Good!"
+        } else {
+            title = "Not even close..."
+        }
         
         score += points
         
+        // Popup alert display messages
         let message = "The value of the slider is: \(currentValue)"
                     + "\nThe target value is: \(targetValue)"
                     + "\nThe difference is: \(difference)"
                     + "\nYou scored \(points) points!"
         
-        let alert = UIAlertController(title: "Hello World",
+        let alert = UIAlertController(title: title,
                                       message: message,
                                       preferredStyle: .alert)
         
@@ -85,9 +102,8 @@ class ViewController: UIViewController {
 }
 
 
-// 1. Get the difference between current value and targetValue
-// 2. Add player's score
-// 3. Increment rounds on screen
+// 1. Add title to alert popup
+// 2. Increase points scoring
 
 
 

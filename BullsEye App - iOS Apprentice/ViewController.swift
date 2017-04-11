@@ -63,8 +63,7 @@ class ViewController: UIViewController {
         score += points
         
         // Popup alert display messages
-        let message = "The value of the slider is: \(currentValue)"
-                    + "\nThe target value is: \(targetValue)"
+        let message = "You placed the slider on: \(currentValue)"
                     + "\nThe difference is: \(difference)"
                     + "\nYou scored \(points) points!"
         
@@ -74,16 +73,15 @@ class ViewController: UIViewController {
         
         let action = UIAlertAction(title: "Ok",
                                    style: .default,
-                                   handler: nil)
+                                   handler: { action in
+                                   self.startNewRound()       // Popup alert callback pattern event handler for starting new round
+                                    self.updateLabels() } )   // and updating the labels
         
         alert.addAction(action)
         
         present(alert,
                 animated: true,
                 completion: nil)
-        
-        startNewRound()
-        updateLabels()
     }
     
     func updateLabels() {
@@ -102,8 +100,7 @@ class ViewController: UIViewController {
 }
 
 
-// 1. Add title to alert popup
-// 2. Increase points scoring
+// 1. Added callback pattern event handler to the popup alert for starting new round and updating labels
 
 
 
